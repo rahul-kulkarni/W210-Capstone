@@ -12,6 +12,8 @@ Or run the `docker_build.sh` on Linux/Mac.
 ### Run Docker
 From within the `generate_predictions` directory run:   
 
+**Note:** Below instructions assume no GPU, to run Docker with GPU, include `--gpus=all` flag. 
+
 #### On Linux/Mac
 ```
 $ docker run --rm -it -p 8888:8888 -v $(pwd):/workspace w210_jupyter 
