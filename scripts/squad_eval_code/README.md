@@ -21,6 +21,10 @@ $ cl upload src -d "Source scripts for testing predictions."
 $ cl upload data/allennlp-bidaf-single-predictions -n "allennlp-bidaf-single-predictions"
 $ cl upload data/match-lstm-bi-ans-ptr-boundary-single-predictions -n "match-lstm-bi-ans-ptr-boundary-single-predictions"
 $ cl upload data/bidaf-self-attention-single-predictions -n "bidaf-self-attention-single-predictions"
+$ cl upload data/bert-large-cased-whole-word-masking-finetuned-squad-predictions -n "bert-large-cased-whole-word-masking-finetuned-squad-predictions"
+$ cl upload data/bert-large-uncased-whole-word-masking-finetuned-squad-predictions -n "bert-large-uncased-whole-word-masking-finetuned-squad-predictions"
+$ cl upload data/distilbert-base-cased-distilled-squad-predictions -n "distilbert-base-cased-distilled-squad-predictions"
+$ cl upload data/distilbert-base-uncased-distilled-squad-predictions -n "distilbert-base-uncased-distilled-squad-predictions"
 ```
 More datasets are available in this worksheet under "Evaluate on Amazon". https://worksheets.codalab.org/worksheets/0x412235fe516945fa81d04e6938109f0b (expand the packages to find the dependency with '-predictions' at the end of it.)
 
@@ -41,4 +45,4 @@ The stderr: "Evaluation expects v-1.1, but got dataset with v-1.0" occurred on t
 
 `evaluate_squad_model_predictions.py` opens the JSON file passed in the --experiment-info-path argument and iterates through the lines to setup tests.  
 
-It looks to see if there is a file with the mode + "-predictions" in the worksheet (--host-worksheet-uuid) and if it finds one, it executes a public file evaluate-v1.1.py (https://worksheets.codalab.org/bundles/0xbcd57bee090b421c982906709c8c27e1).  This is apparently the "Official evaluation script for v1.1 of the SQuAD dataset." 
+It looks to see if there is a file with the mode + "-predictions" in the worksheet (--host-worksheet-uuid) and if it finds one, it executes a public file evaluate-v1.1.py (https://worksheets.codalab.org/bundles/0xbcd57bee090b421c982906709c8c27e1).  This is apparently the "Official evaluation script for v1.1 of the SQuAD dataset."

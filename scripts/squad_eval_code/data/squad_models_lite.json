@@ -1,5 +1,9 @@
 [
     {"published": "https://arxiv.org/abs/1611.01603,https://arxiv.org/abs/1803.07640", "name": "allennlp-bidaf-single", "description": "AllenNLP BiDAF (Single)", "uuid": "0x8704f9226d884b5687fba7f73a462195"},
     {"published": "https://arxiv.org/abs/1710.10723", "name": "bidaf-self-attention-single", "description": "BiDAF + Self-Attention (Single)", "uuid": "0xe0b60a2436ef407cbf5fa0641c5350ba"},
-    {"published": "https://arxiv.org/abs/1608.07905", "name": "match-lstm-bi-ans-ptr-boundary-single", "description": "Match-LSTM w/ Bi-Ans-Ptr Boundary (Single)", "uuid": "0x5f678f88703f4eb0b320793ed998dc20"}
+    {"published": "https://arxiv.org/abs/1608.07905", "name": "match-lstm-bi-ans-ptr-boundary-single", "description": "Match-LSTM w/ Bi-Ans-Ptr Boundary (Single)", "uuid": "0x5f678f88703f4eb0b320793ed998dc20"},
+    {"published": "", "name": "bert-large-cased-whole-word-masking-finetuned-squad", "description": "bert-large-cased-whole-word-masking-finetuned-squad", "uuid": ""},
+    {"published": "", "name": "bert-large-uncased-whole-word-masking-finetuned-squad", "description": "bert-large-uncased-whole-word-masking-finetuned-squad", "uuid": ""},
+    {"published": "", "name": "distilbert-base-cased-distilled-squad", "description": "distilbert-base-cased-distilled-squad", "uuid": ""},
+    {"published": "", "name": "distilbert-base-uncased-distilled-squad", "description": "distilbert-base-uncased-distilled-squad", "uuid": ""}
 ]
