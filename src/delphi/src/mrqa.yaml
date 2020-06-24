@@ -1,0 +1,37 @@
+parameters:
+  predict:
+    model_type: "xlnet"
+    model_name_or_path: null  # This should be overwritten by an argument
+    config_name: null  # default to standard
+    tokenizer_name: null  # default to standard
+    cache_dir: "pretrained_models/model"  # "pretrained_models/bert-base-cased/"
+    multiprocessing:
+      featurization: False
+      featurization_workers: 8
+      eval_featurization_workers: 4
+      text_metrics: False
+      text_metrics_workers: 4
+
+    max_seq_length: 512
+    doc_stride: 128
+    max_query_length: 64
+    do_lower_case: False
+
+    per_gpu_eval_batch_size: 1
+    n_best_size: 20
+    max_answer_length: 30
+
+    eval_sample_size: null
+    verbose: False
+    save_cache_features: False
+
+    logging_steps: 10
+    no_cuda: False
+    seed: 42
+
+    local_rank: -1
+    fp16: False # NB: Only `False` accommodated for now.
+    fp16_opt_level: "01"
+
+    version_2_with_negative: False  # For SQuAD 2.0
+    null_score_diff_threshold: 0.0
