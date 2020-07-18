@@ -57,13 +57,12 @@ Output: Matrix of model scores stored in `/data/ablation/results`
 
 ## Docker Stuff
 
-```
-$ docker run --rm -it --gpus=all -p 8888:8888 -v $(pwd):/workspace -v /data/distribution_shift/:/data kevinhanna/w210_nlp_jupyter:20200718
-```
-
-Notes:
+- The docker container does not have a copy of the repo.  This command needs to be run from the `W210-Capstone/jupyter_notebooks` directory of the repo.
 - For windows replace `$(pwd)` with `${PWD}` (or to the path to the `jupyter_notebooks` directory)
 - Change the first `/data` to where you want to store output.
+```
+$ docker run --rm -it --gpus=all -p 8888:8888 -v $(pwd):/workspace -v /data/:/data kevinhanna/w210_nlp_jupyter:20200718
+```
 
 
 Once the docker container is running, start Jupyter:  
