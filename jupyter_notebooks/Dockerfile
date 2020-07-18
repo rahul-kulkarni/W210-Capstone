@@ -9,8 +9,7 @@ RUN apt-get update && apt-get install -y \
 && rm -rf /var/lib/apt/list/*
 
 RUN echo 'alias jtail="tail -100 ~/jupiter.log"' >> ~/.bashrc
-RUN echo 'alias jnote="nohup jupyter notebook --ip=0.0.0.0 --allow-root > ~/jupiter.log 2>&1 & sleep .5; jtail"' >> ~/.bashrc
 RUN echo 'alias jtoken="grep \?token= ~/jupiter.log | tail -1"' >> ~/.bashrc
+RUN echo 'alias jnote="nohup jupyter notebook --ip=0.0.0.0 --allow-root > ~/jupiter.log 2>&1 & sleep 1; jtoken"' >> ~/.bashrc
 
 WORKDIR /workspace
-

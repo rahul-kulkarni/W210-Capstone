@@ -1,1 +1,1 @@
-docker build -t bert_playground .
+docker build -t w210_nlp_jupyter .
