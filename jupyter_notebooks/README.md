@@ -58,7 +58,7 @@ Output: Matrix of model scores stored in `/data/ablation/results`
 ## Docker Stuff
 
 ```
-$ docker run --rm -it --gpus=all -p 8888:8888 -v $(pwd):/workspace -v /data:/data kevinhanna/w210_nlp_jupyter
+$ docker run --rm -it --gpus=all -p 8888:8888 -v $(pwd):/workspace -v /data/distribution_shift/:/data kevinhanna/w210_nlp_jupyter:20200718
 ```
 
 Notes:
