@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-""" BERT model configuration """
+""" MRQA BERT model configuration """
 
 
 import logging
@@ -23,7 +23,7 @@ from .configuration_utils import PretrainedConfig
 
 logger = logging.getLogger(__name__)
 
-BERT_PRETRAINED_CONFIG_ARCHIVE_MAP = {
+MRQA_BERT_PRETRAINED_CONFIG_ARCHIVE_MAP = {
     "bert-base-uncased": "https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-config.json",
     "bert-large-uncased": "https://s3.amazonaws.com/models.huggingface.co/bert/bert-large-uncased-config.json",
     "bert-base-cased": "https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-cased-config.json",
@@ -50,7 +50,7 @@ BERT_PRETRAINED_CONFIG_ARCHIVE_MAP = {
 }
 
 
-class BertConfig(PretrainedConfig):
+class MRQABertConfig(PretrainedConfig):
     r"""
         This is the configuration class to store the configuration of a :class:`~transformers.BertModel`.
         It is used to instantiate an BERT model according to the specified arguments, defining the model
