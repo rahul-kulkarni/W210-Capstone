@@ -37,14 +37,14 @@ from transformers import (
     AutoModelForQuestionAnswering,
     AutoTokenizer,
     get_linear_schedule_with_warmup,
-    squad_convert_examples_to_features,
+    mrqa_convert_examples_to_features,
 )
-from transformers.data.metrics.squad_metrics import (
+from transformers.data.metrics.mrqa_metrics import (
     compute_predictions_log_probs,
     compute_predictions_logits,
-    squad_evaluate,
+    mrqa_evaluate,
 )
-from transformers.data.processors.squad import SquadResult, SquadV1Processor, SquadV2Processor
+from transformers.data.processors.squad import MRQAResult, MRQAProcessor
 
 
 try:
@@ -437,16 +437,18 @@ def load_and_cache_examples(args, tokenizer, evaluate=False, output_examples=Fal
             if args.version_2_with_negative:
                 logger.warn("tensorflow_datasets does not handle version 2 of SQuAD.")
 
-            tfds_examples = tfds.load("squad")
-            examples = SquadV1Processor().get_examples_from_dataset(tfds_examples, evaluate=evaluate)
+            #tfds_examples = tfds.load("squad")
+            #examples = SquadV1Processor().get_examples_from_dataset(tfds_examples, evaluate=evaluate)
+
+            raise ImportError("Not implemented")
         else:
-            processor = SquadV2Processor() if args.version_2_with_negative else SquadV1Processor()
+            processor = MRQAProcessor()
             if evaluate:
                 examples = processor.get_dev_examples(args.data_dir, filename=args.predict_file)
             else:
                 examples = processor.get_train_examples(args.data_dir, filename=args.train_file)
 
-        features, dataset = squad_convert_examples_to_features(
+        features, dataset = mrqa_convert_examples_to_features(
             examples=examples,
             tokenizer=tokenizer,
             max_seq_length=args.max_seq_length,
