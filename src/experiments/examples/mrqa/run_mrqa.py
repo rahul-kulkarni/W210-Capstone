@@ -437,9 +437,6 @@ def load_and_cache_examples(args, tokenizer, evaluate=False, output_examples=Fal
             if args.version_2_with_negative:
                 logger.warn("tensorflow_datasets does not handle version 2 of SQuAD.")
 
-            #tfds_examples = tfds.load("squad")
-            #examples = SquadV1Processor().get_examples_from_dataset(tfds_examples, evaluate=evaluate)
-
             raise ImportError("Not implemented")
         else:
             processor = MRQAProcessor()

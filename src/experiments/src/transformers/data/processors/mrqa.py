@@ -321,6 +321,7 @@ def mrqa_convert_examples_to_features(
         verbose=True,
         serial=False,
         workers=None,
+        return_dataset="pt"
 ):
     """Loads a data file into a list of `InputBatch`s."""
 
@@ -365,14 +366,44 @@ def mrqa_convert_examples_to_features(
             unique_id += 1
             flattened_features.append(feat)
 
-    return flattened_features
+    if return_dataset == "pt":
+        if not is_torch_available():
+            raise RuntimeError("PyTorch must be installed to return a PyTorch dataset.")
+
+        # Convert to Tensors and build dataset
+        all_input_ids = torch.tensor([f.input_ids for f in flattened_features], dtype=torch.long)
+        all_attention_masks = torch.tensor([f.attention_mask for f in flattened_features], dtype=torch.long)
+        all_token_type_ids = torch.tensor([f.token_type_ids for f in flattened_features], dtype=torch.long)
+        all_cls_index = torch.tensor([f.cls_index for f in flattened_features], dtype=torch.long)
+        all_p_mask = torch.tensor([f.p_mask for f in flattened_features], dtype=torch.float)
+        all_is_impossible = torch.tensor([f.is_impossible for f in flattened_features], dtype=torch.float)
+
+        if not is_training:
+            all_feature_index = torch.arange(all_input_ids.size(0), dtype=torch.long)
+            dataset = TensorDataset(
+                all_input_ids, all_attention_masks, all_token_type_ids, all_feature_index, all_cls_index, all_p_mask
+            )
+        else:
+            all_start_positions = torch.tensor([f.start_position for f in flattened_features], dtype=torch.long)
+            all_end_positions = torch.tensor([f.end_position for f in flattened_features], dtype=torch.long)
+            dataset = TensorDataset(
+                all_input_ids,
+                all_attention_masks,
+                all_token_type_ids,
+                all_start_positions,
+                all_end_positions,
+                all_cls_index,
+                all_p_mask,
+                all_is_impossible,
+            )
+
+    return flattened_features, dataset
 
 
 
-class MRQAProcessor(DataProcessor):
+class _MRQAProcessor(DataProcessor):
     """
-    Processor for the SQuAD data set.
-    Overriden by SquadV1Processor and SquadV2Processor, used by the version 1.1 and version 2.0 of SQuAD, respectively.
+    Processor for the MRQA data set.
     """
 
     train_file = None
@@ -442,12 +473,13 @@ class MRQAProcessor(DataProcessor):
 
         random.shuffle(examples)
 
-        return examples           
+        return examples
 
 
-class MRQAProcessor(SquadProcessor):
+class MRQAProcessor(_MRQAProcessor):
     train_file = "mrqa_train.json"
     dev_file = "mrqa_dev.json"
+
 
 class MRQAExample(object):
     """A single training/test example for the MRQA dataset."""
