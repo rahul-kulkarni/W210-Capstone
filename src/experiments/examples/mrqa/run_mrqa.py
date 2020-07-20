@@ -40,11 +40,11 @@ from transformers import (
     mrqa_convert_examples_to_features,
 )
 from transformers.data.metrics.mrqa_metrics import (
-    compute_predictions_log_probs,
-    compute_predictions_logits,
+    get_bert_text_predictions,
+    get_xlnet_text_predictions,
     mrqa_evaluate,
 )
-from transformers.data.processors.squad import MRQAResult, MRQAProcessor
+from transformers.data.processors.mrqa import MRQAResult, MRQAProcessor
 
 
 try:
@@ -331,7 +331,7 @@ def evaluate(args, model, tokenizer, prefix=""):
                 end_top_index = output[3]
                 cls_logits = output[4]
 
-                result = SquadResult(
+                result = MRQAResult(
                     unique_id,
                     start_logits,
                     end_logits,
@@ -342,7 +342,7 @@ def evaluate(args, model, tokenizer, prefix=""):
 
             else:
                 start_logits, end_logits = output
-                result = SquadResult(unique_id, start_logits, end_logits)
+                result = MRQAResult(unique_id, start_logits, end_logits)
 
             all_results.append(result)
 
@@ -363,7 +363,7 @@ def evaluate(args, model, tokenizer, prefix=""):
         start_n_top = model.config.start_n_top if hasattr(model, "config") else model.module.config.start_n_top
         end_n_top = model.config.end_n_top if hasattr(model, "config") else model.module.config.end_n_top
 
-        predictions = compute_predictions_log_probs(
+        predictions = get_xlnet_text_predictions(
             examples,
             features,
             all_results,
@@ -379,7 +379,7 @@ def evaluate(args, model, tokenizer, prefix=""):
             args.verbose_logging,
         )
     else:
-        predictions = compute_predictions_logits(
+        predictions = get_bert_text_predictions(
             examples,
             features,
             all_results,
@@ -392,11 +392,11 @@ def evaluate(args, model, tokenizer, prefix=""):
             args.verbose_logging,
             args.version_2_with_negative,
             args.null_score_diff_threshold,
-            tokenizer,
+            tokenizer
         )
 
     # Compute the F1 and exact scores.
-    results = squad_evaluate(examples, predictions)
+    results = mrqa_evaluate(examples, predictions)
     return results
 
 
