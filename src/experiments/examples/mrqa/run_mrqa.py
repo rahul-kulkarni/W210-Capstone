@@ -44,7 +44,7 @@ from transformers.data.metrics.mrqa_metrics import (
     get_xlnet_text_predictions,
     mrqa_evaluate,
 )
-from transformers.data.processors.squad import MRQAResult, MRQAProcessor
+from transformers.data.processors.mrqa import MRQAResult, MRQAProcessor
 
 
 try:
