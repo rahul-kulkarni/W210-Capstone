@@ -191,7 +191,6 @@ MODEL_MAPPING = OrderedDict(
         (CTRLConfig, CTRLModel),
         (ElectraConfig, ElectraModel),
         (ReformerConfig, ReformerModel),
-        (MRQABertConfig, MRQABertModel),
     ]
 )
 
@@ -321,7 +320,6 @@ MODEL_FOR_QUESTION_ANSWERING_MAPPING = OrderedDict(
         (XLMConfig, XLMForQuestionAnsweringSimple),
         (ElectraConfig, ElectraForQuestionAnswering),
         (ReformerConfig, ReformerForQuestionAnswering),
-        (MRQABertConfig, MRQABertForQuestionAnswering)
     ]
 )
 
