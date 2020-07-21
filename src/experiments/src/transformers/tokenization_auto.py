@@ -42,6 +42,7 @@ from .configuration_auto import (
     XLMConfig,
     XLMRobertaConfig,
     XLNetConfig,
+    MrqaConfig,
 )
 from .configuration_marian import MarianConfig
 from .configuration_utils import PretrainedConfig
@@ -67,6 +68,7 @@ from .tokenization_transfo_xl import TransfoXLTokenizer, TransfoXLTokenizerFast
 from .tokenization_xlm import XLMTokenizer
 from .tokenization_xlm_roberta import XLMRobertaTokenizer
 from .tokenization_xlnet import XLNetTokenizer
+from .tokenization_mrqa import MrqaTokenizer
 
 
 logger = logging.getLogger(__name__)
@@ -96,6 +98,7 @@ TOKENIZER_MAPPING = OrderedDict(
         (FlaubertConfig, (FlaubertTokenizer, None)),
         (XLMConfig, (XLMTokenizer, None)),
         (CTRLConfig, (CTRLTokenizer, None)),
+        (MrqaConfig, (MrqaTokenizer, None)),
     ]
 )
 

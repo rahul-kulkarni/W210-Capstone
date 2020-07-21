@@ -41,7 +41,7 @@ from .configuration_utils import PretrainedConfig
 from .configuration_xlm import XLM_PRETRAINED_CONFIG_ARCHIVE_MAP, XLMConfig
 from .configuration_xlm_roberta import XLM_ROBERTA_PRETRAINED_CONFIG_ARCHIVE_MAP, XLMRobertaConfig
 from .configuration_xlnet import XLNET_PRETRAINED_CONFIG_ARCHIVE_MAP, XLNetConfig
-
+from .configuration_mrqa import MRQA_PRETRAINED_CONFIG_ARCHIVE_MAP, MrqaConfig
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +67,7 @@ ALL_PRETRAINED_CONFIG_ARCHIVE_MAP = dict(
         ELECTRA_PRETRAINED_CONFIG_ARCHIVE_MAP,
         LONGFORMER_PRETRAINED_CONFIG_ARCHIVE_MAP,
         RETRIBERT_PRETRAINED_CONFIG_ARCHIVE_MAP,
+        MRQA_PRETRAINED_CONFIG_ARCHIVE_MAP,
     ]
     for key, value, in pretrained_map.items()
 )
@@ -97,6 +98,7 @@ CONFIG_MAPPING = OrderedDict(
         ("ctrl", CTRLConfig,),
         ("electra", ElectraConfig,),
         ("encoder-decoder", EncoderDecoderConfig,),
+        ("mrqa", MrqaConfig),
     ]
 )
 
@@ -155,6 +157,7 @@ class AutoConfig:
             - `ctrl` : :class:`~transformers.CTRLConfig` (CTRL model)
             - `flaubert` : :class:`~transformers.FlaubertConfig` (Flaubert model)
             - `electra` : :class:`~transformers.ElectraConfig` (ELECTRA model)
+            - `mrqa` : :class:`~transformers.mrqa` (MRQA model)
 
         Args:
             pretrained_model_name_or_path (:obj:`string`):

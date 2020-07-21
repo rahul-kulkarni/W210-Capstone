@@ -42,6 +42,7 @@ from .configuration_auto import (
     XLMConfig,
     XLMRobertaConfig,
     XLNetConfig,
+    MrqaConfig,
 )
 from .configuration_marian import MarianConfig
 from .configuration_utils import PretrainedConfig
@@ -164,6 +165,10 @@ from .modeling_xlnet import (
     XLNetLMHeadModel,
     XLNetModel,
 )
+from .modeling_mrqa import (
+    MrqaForQuestionAnswering,
+    MrqaModel,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -191,6 +196,7 @@ MODEL_MAPPING = OrderedDict(
         (CTRLConfig, CTRLModel),
         (ElectraConfig, ElectraModel),
         (ReformerConfig, ReformerModel),
+        (MrqaConfig, MrqaModel),
     ]
 )
 
@@ -215,6 +221,7 @@ MODEL_FOR_PRETRAINING_MAPPING = OrderedDict(
         (XLMConfig, XLMWithLMHeadModel),
         (CTRLConfig, CTRLLMHeadModel),
         (ElectraConfig, ElectraForPreTraining),
+        (MrqaConfig, MrqaModel),
     ]
 )
 
@@ -320,6 +327,7 @@ MODEL_FOR_QUESTION_ANSWERING_MAPPING = OrderedDict(
         (XLMConfig, XLMForQuestionAnsweringSimple),
         (ElectraConfig, ElectraForQuestionAnswering),
         (ReformerConfig, ReformerForQuestionAnswering),
+        (MrqaConfig, MrqaForQuestionAnswering),
     ]
 )
 
