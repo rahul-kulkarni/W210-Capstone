@@ -425,11 +425,17 @@ class _MRQAProcessor(DataProcessor):
         if self.train_file is None:
             raise ValueError("SquadProcessor should be instantiated via SquadV1Processor or SquadV2Processor")
 
+        contexts = []
         with open(
             os.path.join(data_dir, self.train_file if filename is None else filename), "r", encoding="utf-8"
         ) as reader:
-            input_data = json.load(reader)
-        return self._create_examples(input_data, "train")
+            for example in reader:
+                context = json.loads(example)
+                if 'header' in context:
+                    continue
+                contexts.append(context)
+
+        return self._create_examples(contexts, "train")
 
     def get_dev_examples(self, data_dir, filename=None):
         """
@@ -446,11 +452,17 @@ class _MRQAProcessor(DataProcessor):
         if self.dev_file is None:
             raise ValueError("SquadProcessor should be instantiated via SquadV1Processor or SquadV2Processor")
 
+        contexts = []
         with open(
             os.path.join(data_dir, self.dev_file if filename is None else filename), "r", encoding="utf-8"
         ) as reader:
-            input_data = json.load(reader)
-        return self._create_examples(input_data, "dev")
+            for example in reader:
+                context = json.loads(example)
+                if 'header' in context:
+                    continue
+                contexts.append(context)
+
+        return self._create_examples(contexts, "dev")
 
     def _create_examples(self, input_data, set_type):
         is_training = set_type == "train"
