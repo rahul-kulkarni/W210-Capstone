@@ -36,9 +36,6 @@ ProcessExampleArgs = collections.namedtuple(
     ],
 )
 
-# Store the tokenizers which insert 2 separators tokens
-MULTI_SEP_TOKENS_TOKENIZERS_SET = {"roberta", "camembert", "bart"}
-
 
 if is_torch_available():
     import torch
@@ -117,7 +114,8 @@ def mrqa_convert_example_to_features_init(tokenizer_for_convert):
 
 
 def process_example(example_index, example, args):
-    query_tokens = args.tokenizer.mrqa_tokenize_tokens(example.question_tokens)
+    #query_tokens = args.tokenizer.mrqa_tokenize_tokens(example.question_tokens)
+    query_tokens = args.tokenizer.tokenize(example.question_tokens)
 
     if len(query_tokens) > args.max_query_length:
         query_tokens = query_tokens[0 : args.max_query_length]
@@ -127,8 +125,8 @@ def process_example(example_index, example, args):
     all_doc_tokens = []
     for (i, token) in enumerate(example.doc_tokens):
         orig_to_tok_index.append(len(all_doc_tokens))
-        # sub_tokens = tokenizer.tokenize(token)
-        sub_tokens = args.tokenizer.mrqa_tokenize_tokens([token])
+        sub_tokens = tokenizer.tokenize(token)
+        #sub_tokens = args.tokenizer.mrqa_tokenize_tokens([token])
         for sub_token in sub_tokens:
             tok_to_orig_index.append(i)
             all_doc_tokens.append(sub_token)

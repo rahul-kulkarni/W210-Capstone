@@ -17,8 +17,7 @@
 
 import logging
 
-from .configuration_utils import PretrainedConfig
-
+from .configuration_bert import BertConfig
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +27,7 @@ MRQA_PRETRAINED_CONFIG_ARCHIVE_MAP = {
 }
 
 
-class MrqaConfig(PretrainedConfig):
+class MrqaConfig(BertConfig):
     r"""
         :class:`~transformers.MrqaConfig` is the configuration class to store the configuration of a
         `MrqaModel`.

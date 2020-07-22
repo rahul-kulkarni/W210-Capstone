@@ -410,7 +410,6 @@ if is_torch_available():
         RETRIBERT_PRETRAINED_MODEL_ARCHIVE_LIST,
     )
     from .modeling_mrqa import (
-        MrqaPreTrainedModel,
         MrqaModel,
         MrqaForQuestionAnswering,
         MRQA_PRETRAINED_MODEL_ARCHIVE_LIST,
