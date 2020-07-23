@@ -63,6 +63,7 @@ from .data import (
     xnli_output_modes,
     xnli_processors,
     xnli_tasks_num_labels,
+    mrqa_convert_examples_to_features,
 )
 
 # Files and general utilities
