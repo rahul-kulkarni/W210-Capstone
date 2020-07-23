@@ -113,9 +113,54 @@ def mrqa_convert_example_to_features_init(tokenizer_for_convert):
     tokenizer = tokenizer_for_convert
 
 
+class InputFeatures(object):
+    """A single set of features of data."""
+
+    def __init__(
+            self,
+            unique_id,
+            metadata,
+            example_index,
+            doc_span_index,
+            tokens,
+            token_to_orig_map,
+            token_is_max_context,
+            input_ids,
+            input_mask,
+            segment_ids,
+            cls_index,
+            p_mask,
+            paragraph_len,
+            start_position=None,
+            end_position=None,
+            is_impossible=None,
+    ):
+        self.unique_id = unique_id
+        self.metadata = metadata
+        self.example_index = example_index
+        self.doc_span_index = doc_span_index
+        self.tokens = tokens
+        self.token_to_orig_map = token_to_orig_map
+        self.token_is_max_context = token_is_max_context
+        self.input_ids = input_ids
+        self.input_mask = input_mask
+        self.segment_ids = segment_ids
+        self.cls_index = cls_index
+        self.p_mask = p_mask
+        self.paragraph_len = paragraph_len
+        self.start_position = start_position
+        self.end_position = end_position
+        self.is_impossible = is_impossible
+
+
 def process_example(example_index, example, args):
     #query_tokens = args.tokenizer.mrqa_tokenize_tokens(example.question_tokens)
-    query_tokens = args.tokenizer.tokenize(example.question_tokens)
+    #print("example", example)
+    #print("q", example.qas_id,  example.question_tokens)
+
+    query_tokens = []
+    for token in example.question_tokens:
+        query_tokens.extend(args.tokenizer.tokenize(token))
 
     if len(query_tokens) > args.max_query_length:
         query_tokens = query_tokens[0 : args.max_query_length]
@@ -125,7 +170,7 @@ def process_example(example_index, example, args):
     all_doc_tokens = []
     for (i, token) in enumerate(example.doc_tokens):
         orig_to_tok_index.append(len(all_doc_tokens))
-        sub_tokens = tokenizer.tokenize(token)
+        sub_tokens = args.tokenizer.tokenize(token)
         #sub_tokens = args.tokenizer.mrqa_tokenize_tokens([token])
         for sub_token in sub_tokens:
             tok_to_orig_index.append(i)
@@ -370,8 +415,10 @@ def mrqa_convert_examples_to_features(
 
         # Convert to Tensors and build dataset
         all_input_ids = torch.tensor([f.input_ids for f in flattened_features], dtype=torch.long)
-        all_attention_masks = torch.tensor([f.attention_mask for f in flattened_features], dtype=torch.long)
-        all_token_type_ids = torch.tensor([f.token_type_ids for f in flattened_features], dtype=torch.long)
+        all_attention_masks = torch.tensor([f.input_mask for f in flattened_features], dtype=torch.long)
+        #all_attention_masks = torch.tensor([f.attention_mask for f in flattened_features], dtype=torch.long)
+        #all_token_type_ids = torch.tensor([f.token_type_ids for f in flattened_features], dtype=torch.long)
+        all_token_type_ids = torch.tensor([f.segment_ids for f in flattened_features], dtype=torch.long)
         all_cls_index = torch.tensor([f.cls_index for f in flattened_features], dtype=torch.long)
         all_p_mask = torch.tensor([f.p_mask for f in flattened_features], dtype=torch.float)
         all_is_impossible = torch.tensor([f.is_impossible for f in flattened_features], dtype=torch.float)
