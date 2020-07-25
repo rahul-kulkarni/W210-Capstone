@@ -5,6 +5,7 @@ python -m torch.distributed.launch --nproc_per_node=4 ./run_mrqa.py \
     --tokenizer_name bert-base-uncased \
     --model_name_or_path bert-base-uncased\
     --do_train \
+    --do_eval \
     --do_lower_case \
     --train_file $MRQA_DIR/mrqa-train.json \
     --predict_file $MRQA_DIR/mrqa-dev.json \

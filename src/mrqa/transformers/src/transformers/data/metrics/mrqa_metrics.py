@@ -648,9 +648,14 @@ def metric_max_over_ground_truths(metric_fn, prediction, ground_truths):
     return max(scores_for_ground_truths)
 
 
-def mrqa_evaluate(answers, predictions):
+def mrqa_evaluate(examples, predictions):
+
     f1 = exact_match = total = 0
-    for qid, ground_truths in answers.items():
+    #for qid, ground_truths in answers.items():
+    for example in examples:
+        qid = example.qas_id
+        gold_answers = [answer for answer in example.orig_answer_texts if normalize_answer(answer)]
+        print("answers", gold_answers)
         total += 1
         if qid not in predictions:
             message = 'Unanswered question %s will receive score 0.' % qid
@@ -658,9 +663,9 @@ def mrqa_evaluate(answers, predictions):
             continue
         prediction = predictions[qid]
         exact_match += metric_max_over_ground_truths(
-            exact_match_score, prediction, ground_truths)
+            exact_match_score, prediction, gold_answers)
         f1 += metric_max_over_ground_truths(
-            f1_score, prediction, ground_truths)
+            f1_score, prediction, gold_answers)
 
     exact_match = 100.0 * exact_match / total
     f1 = 100.0 * f1 / total
