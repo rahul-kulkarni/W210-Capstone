@@ -645,7 +645,10 @@ def metric_max_over_ground_truths(metric_fn, prediction, ground_truths):
     for ground_truth in ground_truths:
         score = metric_fn(prediction, ground_truth)
         scores_for_ground_truths.append(score)
-    return max(scores_for_ground_truths)
+    if not scores_for_ground_truths:
+        print("hmm:", prediction, ground_truths)
+    print("ok:", prediction, ground_truths)
+    return max(scores_for_ground_truths, default=0)
 
 
 def mrqa_evaluate(examples, predictions):
