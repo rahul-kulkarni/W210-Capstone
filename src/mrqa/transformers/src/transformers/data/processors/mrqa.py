@@ -534,8 +534,8 @@ class _MRQAProcessor(DataProcessor):
 
 
 class MRQAProcessor(_MRQAProcessor):
-    train_file = "mrqa_train.json"
-    dev_file = "mrqa_dev.json"
+    train_file = "mrqa-train.json"
+    dev_file = "mrqa-dev.json"
 
 
 class MRQAExample(object):

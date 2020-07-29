@@ -22,6 +22,7 @@
 
 from __future__ import absolute_import, division, print_function
 
+import json
 import collections
 import math
 import string
@@ -49,6 +50,8 @@ def get_bert_text_predictions(
         null_score_diff_threshold,
         tokenizer
 ):
+    all_predictions = collections.OrderedDict()
+    all_nbest_json = collections.OrderedDict()
 
     example_index_to_features = collections.defaultdict(list)
     for feature in all_features:
@@ -242,15 +245,15 @@ def get_bert_text_predictions(
                 all_predictions[example.qas_id] = mrqa_final_pred
         all_nbest_json[example.qas_id] = nbest_json
 
-    # with open(output_prediction_file, "w") as writer:
-    #     writer.write(json.dumps(all_predictions, indent=4) + "\n")
+    with open(output_prediction_file, "w") as writer:
+        writer.write(json.dumps(all_predictions, indent=4) + "\n")
 
-    # with open(output_nbest_file, "w") as writer:
-    #     writer.write(json.dumps(all_nbest_json, indent=4) + "\n")
+    with open(output_nbest_file, "w") as writer:
+        writer.write(json.dumps(all_nbest_json, indent=4) + "\n")
 
-    # if version_2_with_negative:
-    #     with open(output_null_log_odds_file, "w") as writer:
-    #         writer.write(json.dumps(scores_diff_json, indent=4) + "\n")
+    if version_2_with_negative:
+        with open(output_null_log_odds_file, "w") as writer:
+            writer.write(json.dumps(scores_diff_json, indent=4) + "\n")
 
     return all_predictions
 
@@ -645,9 +648,6 @@ def metric_max_over_ground_truths(metric_fn, prediction, ground_truths):
     for ground_truth in ground_truths:
         score = metric_fn(prediction, ground_truth)
         scores_for_ground_truths.append(score)
-    if not scores_for_ground_truths:
-        print("hmm:", prediction, ground_truths)
-    print("ok:", prediction, ground_truths)
     return max(scores_for_ground_truths, default=0)
 
 
@@ -658,11 +658,9 @@ def mrqa_evaluate(examples, predictions):
     for example in examples:
         qid = example.qas_id
         gold_answers = [answer for answer in example.orig_answer_texts if normalize_answer(answer)]
-        print("answers", gold_answers)
         total += 1
         if qid not in predictions:
             message = 'Unanswered question %s will receive score 0.' % qid
-            print(message)
             continue
         prediction = predictions[qid]
         exact_match += metric_max_over_ground_truths(
