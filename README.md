@@ -1,4 +1,4 @@
-# This repo contains all the experiments and code for our paper (in the docs directory)
+This repo contains all the experiments and code for our paper (in the docs directory)
 
 # NLP Generalization for QA Tasks 
 
